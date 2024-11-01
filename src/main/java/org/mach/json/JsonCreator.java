@@ -1,34 +1,51 @@
 package org.mach.json;
 
-import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import org.mach.records.CurrencyRecord;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonParser;
+import org.mach.records.QuoteRecord;
+import org.mach.records.ConversionRecord;
 
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
 public class JsonCreator {
 
-    private static final Gson gson = new GsonBuilder()
-            .setFieldNamingPolicy(FieldNamingPolicy.UPPER_CAMEL_CASE)
-            .setPrettyPrinting()
-            .create();
+    private final Gson gson = new GsonBuilder().setPrettyPrinting().create();
 
-    private static final List<CurrencyRecord> lista = new ArrayList<>();
+    public void createJson(QuoteRecord record) throws IOException {
+        JsonArray jsonArray = readExistingJson("quote.json");
+        JsonElement newRecord = gson.toJsonTree(record);
+        jsonArray.add(newRecord);
+        writeJsonToFile(jsonArray, "quote.json");
+    }
 
-    public void createJson(CurrencyRecord c) {
+    public void createJson(ConversionRecord record) throws IOException {
+        JsonArray jsonArray = readExistingJson("conversion.json");
+        JsonElement newRecord = gson.toJsonTree(record);
+        jsonArray.add(newRecord);
+        writeJsonToFile(jsonArray, "conversion.json");
+    }
 
-        lista.add(c);
-
-        try (FileWriter writer = new FileWriter("conversion.json")) {
-            gson.toJson(lista, writer);
+    private JsonArray readExistingJson(String fileName) {
+        try (FileReader reader = new FileReader(fileName)) {
+            JsonElement jsonElement = JsonParser.parseReader(reader);
+            if (jsonElement.isJsonArray()) {
+                return jsonElement.getAsJsonArray();
+            } else {
+                return new JsonArray();
+            }
         } catch (IOException e) {
-            System.out.println("Um erro aconteceu: ");
-            System.out.println(e.getMessage());
+            return new JsonArray();
         }
+    }
 
+    private void writeJsonToFile(JsonArray jsonArray, String fileName) throws IOException {
+        try (FileWriter writer = new FileWriter(fileName)) {
+            gson.toJson(jsonArray, writer);
+        }
     }
 }
