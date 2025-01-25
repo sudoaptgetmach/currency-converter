@@ -43,10 +43,11 @@ java -cp target/conversor-moedas-1.0-SNAPSHOT.jar org.mach.AppManager
 
 ## Uso
 
-Ao executar a aplicação, você será solicitado a escolher entre duas opções:  
-Obter a cotação de uma moeda específica.
-Converter um valor de uma moeda para outra.
-Você também pode digitar lista para ver as moedas disponíveis.  
+Ao executar a aplicação, você será solicitado a escolher entre duas opções:
+
+1. Obter a cotação de uma moeda específica.
+
+2. Converter um valor de uma moeda para outra (digite lista para ver as moedas disponíveis).  
 
 Estrutura do Projeto
 
