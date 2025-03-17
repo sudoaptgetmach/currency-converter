@@ -19,7 +19,7 @@ Este projeto é um simples conversor de moedas e aplicação de cotação de câ
 
 1. Clone o repositório:
     ```sh
-    git clone https://github.com/seuusuario/conversor-moedas.git
+    git clone https://github.com/sudoaptgetmach/currency-converter.git
     cd conversor-moedas
     ```
 
